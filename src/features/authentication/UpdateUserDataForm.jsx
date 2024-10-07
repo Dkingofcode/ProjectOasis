@@ -67,7 +67,12 @@ function UpdateUserDataForm() {
         />
       </FormRow>
       <FormRow>
-        <Button onClick={handleCancel} type='reset' variation='secondary'>
+        <Button 
+          onClick={handleCancel} 
+          type='reset' 
+          variation='secondary'
+          disabled={isUpdating}
+          >
           Cancel
         </Button>
         <Button disabled={isUpdating}>Update account</Button>

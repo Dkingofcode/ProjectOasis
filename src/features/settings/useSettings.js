@@ -1,6 +1,6 @@
-export async function useSettings() {
 
-}import { useQuery } from "@tanstack/react-query";
+
+import { useQuery } from "@tanstack/react-query";
 import { getSettings } from "../../services/apiSettings";
 
 export function useSettings() {
