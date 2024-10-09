@@ -1,4 +1,4 @@
-import { useDarkMode } from 'context/DarkModeContext';
+import { useDarkMode } from '../../context/DarkModeContext';
 import {
   Cell,
   Legend,
@@ -8,8 +8,10 @@ import {
   Tooltip,
 } from 'recharts';
 import styled from 'styled-components';
-import { box } from 'styles/styles';
-import Heading from 'ui/Heading';
+import { box } from '../../styles/styles';
+import Heading from '../../ui/Heading';
+import Proptypes from "prop-types";
+
 
 const ChartBox = styled.div`
   ${box}
@@ -307,7 +309,7 @@ function DurationChart({ confirmedStays }) {
             startAngle={180}
             endAngle={-180}
           >
-            {data.map((entry, i) => (
+            {data.map((entry) => (
               <Cell
                 key={entry.duration}
                 fill={entry.color}
@@ -330,6 +332,11 @@ function DurationChart({ confirmedStays }) {
       </ResponsiveContainer>
     </ChartBox>
   );
+}
+
+
+DurationChart.propTypes = {
+    confirmedStays: Proptypes.array.isRequired
 }
 
 export default DurationChart;

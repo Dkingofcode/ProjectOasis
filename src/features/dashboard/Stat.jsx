@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { box } from 'styles/styles';
+import PropTypes from 'prop-types'; // Import PropTypes for validation
+import { box } from '../../styles/styles';
 
 const StyledStat = styled.div`
   ${box}
@@ -55,5 +56,16 @@ function Stat({ icon, title, value, color }) {
     </StyledStat>
   );
 }
+
+// Add PropTypes for validation
+Stat.propTypes = {
+  icon: PropTypes.node.isRequired,    // icon can be any renderable React node
+  title: PropTypes.string.isRequired, // title should be a string
+  value: PropTypes.oneOfType([        // value can be a string or a number
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
+  color: PropTypes.string.isRequired, // color should be a string (like 'primary', 'secondary', etc.)
+};
 
 export default Stat;

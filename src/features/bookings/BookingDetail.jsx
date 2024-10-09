@@ -1,22 +1,22 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Spinner from 'ui/Spinner';
+//import Spinner from '../../ui/Spinner';
 import BookingDataBox from './BookingDataBox';
-import Row from 'ui/Row';
-import Heading from 'ui/Heading';
-import Tag from 'ui/Tag';
-import ButtonGroup from 'ui/ButtonGroup';
-import Button from 'ui/Button';
-import Modal from 'ui/Modal';
-import ConfirmDelete from 'ui/ConfirmDelete';
+import Row from '../../ui/Row';
+import Heading from '../../ui/Heading';
+import Tag from '../../ui/Tag';
+import ButtonGroup from '../../ui/ButtonGroup';
+import Button from '../../ui/Button';
+import Modal from '../../ui/Modal';
+import ConfirmDelete from '../../ui/ConfirmDelete';
 
-import { useBooking } from 'features/bookings/useBooking';
+import { useBooking } from './useBooking';
 import { useDeleteBooking } from './useDeleteBooking';
-import { useMoveBack } from 'hooks/useMoveBack';
-import { useCheckout } from 'features/check-in-out/useCheckout';
-import ButtonText from 'ui/ButtonText';
-import Empty from 'ui/Empty';
+import { useMoveBack } from '../../hooks/useMoveBack';
+import { useCheckout } from '../check-in-out/useCheckout';
+import ButtonText from '../../ui/ButtonText';
+//import Empty from '../../ui/Empty';
 
 const HeadingGroup = styled.div`
   display: flex;

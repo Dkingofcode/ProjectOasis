@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types"; // Import PropTypes for validation
 
 const StyledSelect = styled.select`
   font-size: 1.4rem;
@@ -14,22 +15,27 @@ const StyledSelect = styled.select`
   box-shadow: var(--shadow-sm);
 `;
 
-function Select({ options, value, ...props }) {
-  console.log(props);
-
+function Select({ options, value, ...props }) { // Destructure 'value' from props
   return (
-    <StyledSelect>
-       {options.map((option) => (
+    <StyledSelect value={value} {...props}> {/* Use 'value' here */}
+      {options.map((option) => (
         <option value={option.value} key={option.value}>
           {option.label}
         </option>
-       ))}
+      ))}
     </StyledSelect>
-  )
+  );
 }
 
+// Add PropTypes for validation
+Select.propTypes = {
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  value: PropTypes.string, // Define 'value' prop type
+};
 
 export default Select;
-
-
-

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useOutsideClick } from "../hooks/useOutsideClick";
-import { cloneElement, createContext, useContext, useEffect, useRef, useState } from "react";
+import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
-import {HIXMark} from "react-icons/hi2";
-
+import { HiXMark } from "react-icons/hi2"; // Ensure this import is correct
+import PropTypes from 'prop-types'; // Import PropTypes for validation
 
 const StyledModal = styled.div`
   position: fixed;
@@ -47,9 +47,6 @@ const Button = styled.button`
   & svg {
     width: 2.4rem;
     height: 2.4rem;
-    /* Sometimes we need both */
-    /* fill: var(--color-grey-500);
-    stroke: var(--color-grey-500); */
     color: var(--color-grey-500);
   }
 `;
@@ -75,9 +72,8 @@ function Open({ children, opens: opensWindowName }) {
     return cloneElement(children, { onClick: () => open(opensWindowName) });
 }
 
-
-function Window({ children, name }){
-  const { openName, close} = useContext(ModalContext);
+function Window({ children, name }) {
+  const { openName, close } = useContext(ModalContext);
   const ref = useOutsideClick(close);
 
   if (name !== openName) return null;
@@ -86,7 +82,7 @@ function Window({ children, name }){
     <Overlay>
       <StyledModal ref={ref}>
         <Button onClick={close}>
-          <HiXMark  />
+          <HiXMark />
         </Button>
 
         <div>{cloneElement(children, { onCloseModal: close })}</div>
@@ -99,6 +95,19 @@ function Window({ children, name }){
 Modal.Open = Open;
 Modal.Window = Window;
 
+// Add PropTypes for validation
+Modal.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
+Open.propTypes = {
+  children: PropTypes.node.isRequired,
+  opens: PropTypes.string.isRequired,
+};
+
+Window.propTypes = {
+  children: PropTypes.node.isRequired,
+  name: PropTypes.string.isRequired,
+};
 
 export default Modal;

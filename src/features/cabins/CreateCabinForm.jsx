@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { toast, ToastContainer } from "react-toast";
+import { toast } from "react-toast";
 import { useCreateCabin } from '../cabins/useCreateCabin';
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
@@ -8,6 +8,7 @@ import Button from '../../ui/Button';
 import FileInput from '../../ui/FileInput';
 import { useEditCabin } from './useEditCabin';
 import { Textarea } from '../../ui/Textarea';
+import Proptypes from "prop-types";
 
 // We use react-hook-form to make working with complex and REAL-WORLD forms a lot easier. It handles stuff like user validation and errors. manages the form state for us, etc
 // Validating the user’s data passed through the form is a crucial responsibility for a developer.
@@ -35,7 +36,7 @@ function CreateCabinForm({ cabinToEdit, closeModal }) {
     // No need to validate here, because it's already been done. This is REALLY nice!
 
     const options = {
-      onSuccess: (data) => {
+      onSuccess: () => {
         // If this component is used OUTSIDE the Modal Context, this will return undefined, so we need to test for this
         toast.success("New Cabin successfully created");
         closeModal?.();
@@ -172,6 +173,12 @@ function CreateCabinForm({ cabinToEdit, closeModal }) {
       </FormRow>
     </Form>
   );
+}
+
+
+CreateCabinForm.propTypes = {
+  cabinToEdit: Proptypes.string.isRequired,
+  closeModal: Proptypes.bool.isRequired
 }
 
 export default CreateCabinForm;

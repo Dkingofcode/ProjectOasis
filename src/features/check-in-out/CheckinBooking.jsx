@@ -16,8 +16,9 @@ import { useMoveBack } from '../../hooks/useMoveBack';
 import { useCheckin } from './useCheckin';
 
 import styled from 'styled-components';
-import { box } from '../../styles/GlobalStyles';
+//import { box } from '../../styles/GlobalStyles';
 import { useSettings } from '../settings/useSettings';
+import { box } from '../../styles/styles';
 
 const Box = styled.div`
   ${box}

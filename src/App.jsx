@@ -1,36 +1,40 @@
-import React from 'react';
-import styled from 'styled-components';
+//import React from 'react';
+//import styled from 'styled-components';
 import GlobalStyles from "./styles/GlobalStyles";
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import ProtectedRoute from './ui/ProtectedRoute';
 import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
+import Booking from './pages/Booking';
 import Cabins from "./pages/Cabins";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
 import Account from "./pages/Account";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
-import AppLayout from '../../pizza-menu/src/ui/AppLayout';
-import { QueriesObserver, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import AppLayout from './ui/AppLayout';
+import {  QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
-import { toast, ToastContainer} from "react-toast";
+//import { toast, ToastContainer} from "react-toast";
 import { Toaster } from 'react-hot-toast';
 import Checkin from './pages/Checkin';
 import { DarkModeProvider } from './context/DarkModeContext';
+import Signup from "./pages/Signup";
+
 
 // isLoading(v4) = isPending(V5)
 
 // cacheTIme(v4) = gcTime(v5)
 
-const H1 = styled.h1`
-font-size: 30px;
-font-weight: 600;
-`;
+// const H1 = styled.h1`
+// font-size: 30px;
+// font-weight: 600;
+// `;
 
-const Button = styled.button`
- border-radius: 5px;
- padding: 0.8rem 1.2rem;
-`;
+// const Button = styled.button`
+//  border-radius: 5px;
+//  padding: 0.8rem 1.2rem;
+// `;
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -61,6 +65,7 @@ function App() {
       <Route path="account" element={<Account  />} />
     </Route>
       <Route path="login" element={<Login  />} />
+      <Route path="signup" element={<Signup  />}  />
       <Route path="*" element={<PageNotFound />} />
      </Routes>  
     </BrowserRouter>

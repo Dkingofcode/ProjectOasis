@@ -1,28 +1,28 @@
 import styled from 'styled-components';
 import { HiPencil, HiTrash, HiSquare2Stack } from 'react-icons/hi2';
-
 import Menus from '../../ui/Menus';
 import Modal from '../../ui/Modal';
 import ConfirmDelete from '../../ui/ConfirmDelete';
 import Table from '../../ui/Table';
-
 import { formatCurrency } from '../../utils/helpers';
 import { useDeleteCabin } from './useDeleteCabin';
 import { useCreateCabin } from './useCreateCabin';
 import CreateCabinForm from './CreateCabinForm';
+import PropTypes from 'prop-types'; // Import PropTypes for validation
 
-v1
-const TableRow = styled.div`
-  display: grid;
-  grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
-  column-gap: 2.4rem;
-  align-items: center;
-  padding: 1.4rem 2.4rem;
+// Remove the undefined 'v1'
+// If it's supposed to be a version or identifier, define it appropriately.
+// const TableRow = styled.div`
+//   display: grid;
+//   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
+//   column-gap: 2.4rem;
+//   align-items: center;
+//   padding: 1.4rem 2.4rem;
 
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
-  }
-`;
+//   &:not(:last-child) {
+//     border-bottom: 1px solid var(--color-grey-100);
+//   }
+// `;
 
 const Img = styled.img`
   display: block;
@@ -30,7 +30,6 @@ const Img = styled.img`
   aspect-ratio: 3 / 2;
   object-fit: cover;
   object-position: center;
-  /* transform: scale(1.66666) translateX(-2px); */
   transform: scale(1.5) translateX(-7px);
 `;
 
@@ -80,13 +79,9 @@ function CabinRow({ cabin }) {
   return (
     <Table.Row role='row'>
       <Img src={image} alt={`Cabin ${name}`} />
-
       <Cabin>{name}</Cabin>
-
       <div>Fits up to {maxCapacity} guests</div>
-
       <Price>{formatCurrency(regularPrice)}</Price>
-
       {discount ? (
         <Discount>{formatCurrency(discount)}</Discount>
       ) : (
@@ -101,19 +96,15 @@ function CabinRow({ cabin }) {
             <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
               Duplicate
             </Menus.Button>
-
             <Modal.Toggle opens='edit'>
               <Menus.Button icon={<HiPencil />}>Edit cabin</Menus.Button>
             </Modal.Toggle>
-
-            {/* Now it gets a bit confusing... */}
             <Modal.Toggle opens='delete'>
               <Menus.Button icon={<HiTrash />}>Delete cabin</Menus.Button>
             </Modal.Toggle>
           </Menus.List>
         </Menus.Menu>
 
-        {/* This needs to be OUTSIDE of the menu, which in no problem. The compound component gives us this flexibility */}
         <Modal.Window name='edit'>
           <CreateCabinForm cabinToEdit={cabin} />
         </Modal.Window>
@@ -126,22 +117,21 @@ function CabinRow({ cabin }) {
           />
         </Modal.Window>
       </Modal>
-
-      {/* <div>
-        <ButtonWithConfirm
-          title='Delete cabin'
-          description='Are you sure you want to delete this cabin? This action can NOT be undone.'
-          confirmBtnLabel='Delete'
-          onConfirm={() => deleteCabin(cabinId)}
-          disabled={isDeleting}
-        >
-          Delete
-        </ButtonWithConfirm>
-
-        <Link to={`/cabins/${cabinId}`}>Details &rarr;</Link>
-      </div> */}
     </Table.Row>
   );
 }
+
+// Add PropTypes for validation
+CabinRow.propTypes = {
+  cabin: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    maxCapacity: PropTypes.number.isRequired,
+    regularPrice: PropTypes.number.isRequired,
+    discount: PropTypes.number,
+    image: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default CabinRow;

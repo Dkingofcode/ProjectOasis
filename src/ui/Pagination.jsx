@@ -1,4 +1,10 @@
 import styled from "styled-components";
+import {useSearchParams} from "react-router-dom";
+import { PAGE_SIZE } from "../utils/constants";
+import { HiChevronLeft } from "react-icons/hi2";
+import { HiChevronRight } from "react-icons/hi2";
+import PropTypes from "prop-types";
+
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -108,7 +114,9 @@ function Pagination({ count }) {
 }
 
 
-
+Pagination.propTypes = {
+  count: PropTypes.string.isRequired
+}
 
 export default Pagination;
 

@@ -1,10 +1,9 @@
+import PropTypes from 'prop-types'; // Import PropTypes
 import styled from "styled-components";
 import { createContext, useContext } from "react";
 
-
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
-
   font-size: 1.4rem;
   background-color: var(--color-grey-0);
   border-radius: 7px;
@@ -21,7 +20,6 @@ const CommonRow = styled.header`
 
 const StyledHeader = styled(CommonRow)`
   padding: 1.6rem 2.4rem;
-
   background-color: var(--color-grey-50);
   border-bottom: 1px solid var(--color-grey-100);
   text-transform: uppercase;
@@ -60,7 +58,6 @@ const Empty = styled.p`
   margin: 2.4rem;
 `;
 
-
 const TableContext = createContext();
 
 function Table({ columns, children }) {
@@ -79,6 +76,7 @@ function Header({ children }) {
     </StyledHeader>
   );
 }
+
 function Row({ children }) {
   const { columns } = useContext(TableContext);
   return (
@@ -90,15 +88,32 @@ function Row({ children }) {
 
 function Body({ data, render }) {
   if (!data.length) return <Empty>No data to show at the moment</Empty>;
-
   return <StyledBody>{data.map(render)}</StyledBody>;
 }
 
+// Adding PropTypes validation
+Table.propTypes = {
+  columns: PropTypes.string.isRequired, // Ensuring columns is a string and required
+  children: PropTypes.node.isRequired,  // children should be any valid React node
+};
+
+Header.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+Row.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+Body.propTypes = {
+  data: PropTypes.array.isRequired, // data must be an array
+  render: PropTypes.func.isRequired, // render should be a function
+};
+
+// Assigning components to Table
 Table.Header = Header;
 Table.Body = Body;
 Table.Row = Row;
 Table.Footer = Footer;
-
-
 
 export default Table;

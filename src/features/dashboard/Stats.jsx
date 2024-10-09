@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types'; // Import PropTypes
 import {
   HiOutlineBriefcase,
   HiOutlineCalendarDays,
   HiOutlineBanknotes,
   HiOutlineChartBar,
 } from 'react-icons/hi2';
-import { formatCurrency } from 'utils/helpers';
+import { formatCurrency } from '../../utils/helpers';
 import Stat from './Stat';
 
 function Stats({ bookings, confirmedStays, numDays, cabinCount }) {
@@ -18,7 +19,6 @@ function Stats({ bookings, confirmedStays, numDays, cabinCount }) {
   const checkins = confirmedStays.length;
 
   // Stat 4)
-  // We will use a trick to calculate occupancy rate. It's not 100% accurate, but we want to keep it simple. We know we can have a total of 'numDays * cabinCount' days to occupy, and we also know how many days were actually booked. From this, we can compute the percentage
   const occupation =
     confirmedStays.reduce((acc, cur) => acc + cur.numNights, 0) /
     (numDays * cabinCount);
@@ -52,5 +52,22 @@ function Stats({ bookings, confirmedStays, numDays, cabinCount }) {
     </>
   );
 }
+
+// Add PropTypes for validation
+Stats.propTypes = {
+  bookings: PropTypes.arrayOf(
+    PropTypes.shape({
+      totalPrice: PropTypes.number.isRequired,
+      numNights: PropTypes.number,
+    })
+  ).isRequired,
+  confirmedStays: PropTypes.arrayOf(
+    PropTypes.shape({
+      numNights: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  numDays: PropTypes.number.isRequired,
+  cabinCount: PropTypes.number.isRequired,
+};
 
 export default Stats;

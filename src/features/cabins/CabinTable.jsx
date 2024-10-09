@@ -3,7 +3,7 @@ import CabinRow from './CabinRow';
 import Spinner from '../../ui/Spinner';
 import Table from '../../ui/Table';
 import Menus from '../../ui/Menus';
-import Empty from '../../ui/Empty';
+//import Empty from '../../ui/Empty';
 //import { useCabins } from 'features/cabins/useCabins';
 //import { useSearchParams } from 'react-router-dom';
 //import { Suspense } from 'react';
@@ -46,7 +46,7 @@ function CabinTable() {
   //const { cabins } = useCabins();
   //const [searchParams] = useSearchParams();
    
-  const {isLoading, data: cabins, error } = useQuery({
+  const {isLoading, data: cabins,  } = useQuery({
     queryKey: ["cabin"],
     queryFn: getCabins,
   });

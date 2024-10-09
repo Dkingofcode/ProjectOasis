@@ -1,14 +1,18 @@
-import Form from ', ../.. /ui/Form';
+import Form from '../../ui/Form';
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
 import { useSettings } from './useSettings';
+import { useUpdateSetting } from './useUpdateSetting';
+import Spinner from '../../ui/Spinner';
 
+
+//  maxBookingLength,
 function UpdateSettingsForm() {
   const {
     isLoading,
     settings: {
       minBookingLength,
-      maxBookingLength,
+     
       maxGuestsPerBooking,
       breakfastPrice,
     } = {},

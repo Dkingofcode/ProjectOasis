@@ -1,4 +1,6 @@
 import styled, { css } from "styled-components";
+import PropTypes from "prop-types"; // Import PropTypes for validation
+import { useSearchParams } from "react-router-dom"; // Keep the required imports
 
 const StyledFilter = styled.div`
   border: 1px solid var(--color-grey-100);
@@ -34,52 +36,42 @@ const FilterButton = styled.button`
   }
 `;
 
-import React, {useSearchParams} from 'react'
-import Options from "../../../Reactquiz/src-no-context/Options";
-
 function Filter({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentFilter = searchParams.get(filterField) || options.at(0).value;
 
-
-  function handleClick(value){
+  function handleClick(value) {
     searchParams.set(filterField, value);
-     if (searchParams.get("page")) searchParams.set("Page", 1);
+    if (searchParams.get("page")) searchParams.set("Page", 1);
 
     setSearchParams(searchParams);
   }
 
   return (
     <StyledFilter>
-      {options.map((option) => {
-      <FilterButton 
+      {options.map((option) => (
+        <FilterButton
           key={option.value}
           onClick={() => handleClick(option.value)}
           active={option.value === currentFilter}
           disabled={option.value === currentFilter}
-         >
-            {option.label}
-            </FilterButton>      
-      })}
+        >
+          {option.label}
+        </FilterButton>
+      ))}
     </StyledFilter>
   );
 }
 
+// Add PropTypes for validation
+Filter.propTypes = {
+  filterField: PropTypes.string.isRequired, // filterField should be a string
+  options: PropTypes.arrayOf(               // options should be an array of objects
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,   // each option must have a value (string)
+      label: PropTypes.string.isRequired,   // each option must have a label (string)
+    })
+  ).isRequired,
+};
+
 export default Filter;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

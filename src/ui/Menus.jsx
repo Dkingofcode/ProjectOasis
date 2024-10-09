@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import { createContext, useContext, useState } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
-
+import PropTypes from 'prop-types'; // Import PropTypes for validation
 
 const StyledMenu = styled.div`
   display: flex;
@@ -32,11 +32,9 @@ const StyledToggle = styled.button`
 
 const StyledList = styled.ul`
   position: fixed;
-
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-md);
-
   right: ${(props) => props.position.x}px;
   top: ${(props) => props.position.y}px;
 `;
@@ -49,7 +47,6 @@ const StyledButton = styled.button`
   padding: 1.2rem 2.4rem;
   font-size: 1.4rem;
   transition: all 0.2s;
-
   display: flex;
   align-items: center;
   gap: 1.6rem;
@@ -65,7 +62,6 @@ const StyledButton = styled.button`
     transition: all 0.3s;
   }
 `;
-
 
 const MenusContext = createContext();
 
@@ -84,6 +80,11 @@ function Menus({ children }) {
     </MenusContext.Provider>
   );
 }
+
+// Define PropTypes for Menus component
+Menus.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 function Toggle({ id }) {
   const { openId, close, open, setPosition } = useContext(MenusContext);
@@ -107,6 +108,11 @@ function Toggle({ id }) {
   );
 }
 
+// Define PropTypes for Toggle component
+Toggle.propTypes = {
+  id: PropTypes.string.isRequired,
+};
+
 function List({ id, children }) {
   const { openId, position, close } = useContext(MenusContext);
   const ref = useOutsideClick(close, false);
@@ -120,6 +126,12 @@ function List({ id, children }) {
     document.body
   );
 }
+
+// Define PropTypes for List component
+List.propTypes = {
+  id: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 function Button({ children, icon, onClick }) {
   const { close } = useContext(MenusContext);
@@ -139,19 +151,16 @@ function Button({ children, icon, onClick }) {
   );
 }
 
+// Define PropTypes for Button component
+Button.propTypes = {
+  children: PropTypes.node.isRequired,
+  icon: PropTypes.element,
+  onClick: PropTypes.func,
+};
+
 Menus.Menu = StyledMenu;
 Menus.Toggle = Toggle;
 Menus.List = List;
 Menus.Button = Button;
 
 export default Menus;
-
-
-
-
-
-
-
-
-
-

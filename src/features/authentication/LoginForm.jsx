@@ -4,6 +4,9 @@ import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import SpinnerMini from "../../ui/SpinnerMini";
+import { useLogin } from "./useLogin";
+import { useNavigate } from "react-router-dom";
+
 
 
 function LoginForm() {
@@ -11,6 +14,7 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const { login, isLoading } = useLogin();
 
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -24,6 +28,12 @@ function LoginForm() {
         },
       }
     );
+  }
+
+  function handleSignUp(e) {
+    e.preventDefault();
+
+    navigate("/signup");
   }
 
   return (
@@ -55,6 +65,8 @@ function LoginForm() {
           {!isLoading ? "Login" : <SpinnerMini  /> }
           </Button>
       </FormRow>
+      <p>Dont have an account? <Button size="small" onClick={handleSignUp}>Go to SignUp</Button></p>
+      
     </Form>
   );
 }

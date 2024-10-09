@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'; // Import PropTypes
 import styled, { css } from "styled-components";
 
 const StyledFormRow = styled.div`
@@ -55,5 +56,13 @@ function FormRow({ label, error, children, orientation }) {
     </StyledFormRow>
   );
 }
+
+// Add PropTypes validation
+FormRow.propTypes = {
+  label: PropTypes.string, // Label is optional
+  error: PropTypes.string, // Error message is optional
+  children: PropTypes.element.isRequired, // Children is required and must be a valid React element
+  orientation: PropTypes.oneOf(['vertical', 'horizontal']).isRequired, // Orientation is required and must be either "vertical" or "horizontal"
+};
 
 export default FormRow;
