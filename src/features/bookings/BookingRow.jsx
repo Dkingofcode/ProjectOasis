@@ -19,7 +19,7 @@ import { useDeleteBooking } from './useDeleteBooking';
 import { formatCurrency } from '../../utils/helpers';
 import { formatDistanceFromNow } from '../../utils/helpers';
 import { useCheckout } from '../check-in-out/useCheckout';
-import { format, isToday } from 'date-fns';
+import { format, isToday, parseISO } from 'date-fns';
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -48,6 +48,8 @@ const Amount = styled.div`
   font-weight: 500;
 `;
 
+//import { parseISO, format, isToday } from 'date-fns';
+
 function BookingRow({
   booking: {
     id: bookingId,
@@ -56,10 +58,11 @@ function BookingRow({
     numNights,
     totalPrice,
     status,
-    guests: { fullName: guestName, email },
+    guests = {}, // Default to an empty object if guests is undefined
     cabins: { name: cabinName },
   },
 }) {
+  const { fullName: guestName = 'Unknown Guest', email = 'No Email' } = guests;
   const { mutate: deleteBooking, isLoading: isDeleting } = useDeleteBooking();
   const { mutate: checkout, isLoading: isCheckingOut } = useCheckout();
 
@@ -71,8 +74,12 @@ function BookingRow({
     'checked-out': 'silver',
   };
 
+  // Validate and parse the dates using parseISO if they are strings
+  const validStartDate = startDate ? parseISO(startDate) : null;
+  const validEndDate = endDate ? parseISO(endDate) : null;
+
   return (
-    <Table.Row role='row'>
+    <Table.Row role="row">
       <Cabin>{cabinName}</Cabin>
 
       <Stacked>
@@ -82,14 +89,21 @@ function BookingRow({
 
       <Stacked>
         <span>
-          {isToday(new Date(startDate))
+          {validStartDate && isToday(validStartDate)
             ? 'Today'
-            : formatDistanceFromNow(startDate)}{' '}
+            : validStartDate
+            ? formatDistanceFromNow(validStartDate)
+            : 'Invalid Date'}{' '}
           &rarr; {numNights} night stay
         </span>
         <span>
-          {format(new Date(startDate), 'MMM dd yyyy')} &mdash;{' '}
-          {format(new Date(endDate), 'MMM dd yyyy')}
+          {validStartDate
+            ? format(validStartDate, 'MMM dd yyyy')
+            : 'Invalid Date'}{' '}
+          &mdash;{' '}
+          {validEndDate
+            ? format(validEndDate, 'MMM dd yyyy')
+            : 'Invalid Date'}
         </span>
       </Stacked>
 
@@ -129,15 +143,15 @@ function BookingRow({
 
             <Menus.Button icon={<HiPencil />}>Edit booking</Menus.Button>
 
-            <Modal.Toggle opens='delete'>
+            <Modal.Toggle opens="delete">
               <Menus.Button icon={<HiTrash />}>Delete booking</Menus.Button>
             </Modal.Toggle>
           </Menus.List>
         </Menus.Menu>
 
-        <Modal.Window name='delete'>
+        <Modal.Window name="delete">
           <ConfirmDelete
-            resource='booking'
+            resource="booking"
             onConfirm={(options) => deleteBooking(bookingId, options)}
             disabled={isDeleting}
           />
@@ -150,7 +164,7 @@ function BookingRow({
 // Add PropTypes for validation
 BookingRow.propTypes = {
   booking: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     startDate: PropTypes.string.isRequired,
     endDate: PropTypes.string.isRequired,
     numNights: PropTypes.number.isRequired,
@@ -159,7 +173,7 @@ BookingRow.propTypes = {
     guests: PropTypes.shape({
       fullName: PropTypes.string.isRequired,
       email: PropTypes.string.isRequired,
-    }).isRequired,
+    }),
     cabins: PropTypes.shape({
       name: PropTypes.string.isRequired,
     }).isRequired,

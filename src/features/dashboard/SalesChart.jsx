@@ -36,13 +36,20 @@ function SalesChart({ bookings, numDays }) {
     return {
       label: format(date, 'MMM dd'),
       totalSales: bookings
-        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+        .filter((booking) => {
+          const bookingDate = new Date(booking.created_at);
+          return isSameDay(date, !isNaN(bookingDate) ? bookingDate : null);
+        })
         .reduce((acc, cur) => acc + cur.totalPrice, 0),
       extrasSales: bookings
-        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
-        .reduce((acc, cur) => acc + cur.extrasPrice, 0),
+        .filter((booking) => {
+          const bookingDate = new Date(booking.created_at);
+          return isSameDay(date, !isNaN(bookingDate) ? bookingDate : null);
+        })
+        .reduce((acc, cur) => acc + cur.extraPrice, 0),
     };
   });
+  
 
   const colors = isDarkMode
     ? {
@@ -59,47 +66,95 @@ function SalesChart({ bookings, numDays }) {
       };
 
   return (
-    <StyledSalesChart>
-      <Heading type="h2">
-        Sales from {format(allDates.at(0), 'MMM dd yyyy')} &mdash;{' '}
-        {format(allDates.at(-1), 'MMM dd yyyy')}
-      </Heading>
+  
+      <StyledSalesChart>
+        <Heading type="h2">
+          Sales from {allDates.at(0) && !isNaN(allDates.at(0)) ? format(allDates.at(0), 'MMM dd yyyy') : 'Invalid Date'} &mdash;{' '}
+          {allDates.at(-1) && !isNaN(allDates.at(-1)) ? format(allDates.at(-1), 'MMM dd yyyy') : 'Invalid Date'}
+        </Heading>
+    
+        <ResponsiveContainer width="100%" height={300}>
+          <AreaChart data={data}>
+            {/* Chart content */}
+            <XAxis
+             dataKey="label"
+             tick={{ fill: colors.text }}
+             tickLine={{ stroke: colors.text }}
+           />
+           <YAxis
+             unit="$"
+             tick={{ fill: colors.text }}
+             tickLine={{ stroke: colors.text }}
+           />
+           <CartesianGrid strokeDasharray="4" />
+           <Tooltip contentStyle={{ backgroundColor: colors.background }} />
+           <Area
+             type="monotone"
+             dataKey="totalSales"
+             stroke={colors.totalSales.stroke}
+             fill={colors.totalSales.fill}
+             strokeWidth={2}
+             unit="$"
+             name="Total sales"
+           />
+           <Area
+             type="monotone"
+             dataKey="extrasSales"
+             stroke={colors.extrasSales.stroke}
+             fill={colors.extrasSales.fill}
+             strokeWidth={2}
+             unit="$"
+             name="Extras sales"
+           />
+          </AreaChart>
+        </ResponsiveContainer>
+      </StyledSalesChart>
+  
+    
 
-      <ResponsiveContainer width="100%" height={300}>
-        <AreaChart data={data}>
-          <XAxis
-            dataKey="label"
-            tick={{ fill: colors.text }}
-            tickLine={{ stroke: colors.text }}
-          />
-          <YAxis
-            unit="$"
-            tick={{ fill: colors.text }}
-            tickLine={{ stroke: colors.text }}
-          />
-          <CartesianGrid strokeDasharray="4" />
-          <Tooltip contentStyle={{ backgroundColor: colors.background }} />
-          <Area
-            type="monotone"
-            dataKey="totalSales"
-            stroke={colors.totalSales.stroke}
-            fill={colors.totalSales.fill}
-            strokeWidth={2}
-            unit="$"
-            name="Total sales"
-          />
-          <Area
-            type="monotone"
-            dataKey="extrasSales"
-            stroke={colors.extrasSales.stroke}
-            fill={colors.extrasSales.fill}
-            strokeWidth={2}
-            unit="$"
-            name="Extras sales"
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-    </StyledSalesChart>
+
+
+    // <StyledSalesChart>
+    //   <Heading type="h2">
+    //     Sales from {format(allDates.at(0), 'MMM dd yyyy')} &mdash;{' '}
+    //     {format(allDates.at(-1), 'MMM dd yyyy')}
+    //   </Heading>
+
+    //   <ResponsiveContainer width="100%" height={300}>
+    //     <AreaChart data={data}>
+    //       <XAxis
+    //         dataKey="label"
+    //         tick={{ fill: colors.text }}
+    //         tickLine={{ stroke: colors.text }}
+    //       />
+    //       <YAxis
+    //         unit="$"
+    //         tick={{ fill: colors.text }}
+    //         tickLine={{ stroke: colors.text }}
+    //       />
+    //       <CartesianGrid strokeDasharray="4" />
+    //       <Tooltip contentStyle={{ backgroundColor: colors.background }} />
+    //       <Area
+    //         type="monotone"
+    //         dataKey="totalSales"
+    //         stroke={colors.totalSales.stroke}
+    //         fill={colors.totalSales.fill}
+    //         strokeWidth={2}
+    //         unit="$"
+    //         name="Total sales"
+    //       />
+    //       <Area
+    //         type="monotone"
+    //         dataKey="extrasSales"
+    //         stroke={colors.extrasSales.stroke}
+    //         fill={colors.extrasSales.fill}
+    //         strokeWidth={2}
+    //         unit="$"
+    //         name="Extras sales"
+    //       />
+    //     </AreaChart>
+    //   </ResponsiveContainer>
+    // </StyledSalesChart>
   );
 }
 
@@ -109,10 +164,10 @@ SalesChart.propTypes = {
     PropTypes.shape({
       created_at: PropTypes.string.isRequired,
       totalPrice: PropTypes.number.isRequired,
-      extrasPrice: PropTypes.number.isRequired,
+      extraPrice: PropTypes.number,
     })
   ).isRequired,
-  numDays: PropTypes.number.isRequired,
+  numDays: PropTypes.number,
 };
 
 export default SalesChart;

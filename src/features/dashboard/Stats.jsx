@@ -66,7 +66,7 @@ Stats.propTypes = {
       numNights: PropTypes.number.isRequired,
     })
   ).isRequired,
-  numDays: PropTypes.number.isRequired,
+  numDays: PropTypes.number,
   cabinCount: PropTypes.number.isRequired,
 };
 

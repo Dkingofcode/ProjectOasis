@@ -115,7 +115,7 @@ function Pagination({ count }) {
 
 
 Pagination.propTypes = {
-  count: PropTypes.string.isRequired
+  count: PropTypes.number.isRequired
 }
 
 export default Pagination;
