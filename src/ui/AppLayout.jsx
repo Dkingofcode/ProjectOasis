@@ -2,6 +2,8 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import styled from "styled-components";
+//import { Uploader } from "../data/Uploader";
+
 
 const StyledAppLayout = styled.div`
   display: grid;
@@ -34,6 +36,7 @@ function AppLayout() {
         <Outlet />
         </Container>
       </Main>
+     
     </StyledAppLayout>
   );
 }

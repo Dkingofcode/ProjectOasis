@@ -8,6 +8,7 @@ import { useRecentBookings } from './useRecentBooking';
 import Spinner from '../../ui/Spinner';
 import { useRecentStays } from './useRecentStays';
 import { useCabins } from '../cabins/useCabins';
+//import { Uploader } from '../../data/Uploader';
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -40,6 +41,7 @@ function DashboardLayout() {
       <TodayActivity />
       <DurationChart confirmedStays={confirmedStays} />
       <SalesChart bookings={bookings} numDays={numDays} />
+     
     </StyledDashboardLayout>
   );
 }

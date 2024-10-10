@@ -18,10 +18,12 @@ function Stats({ bookings, confirmedStays, numDays, cabinCount }) {
   // Stat 3)
   const checkins = confirmedStays.length;
 
-  // Stat 4)
+  // Stat 4)  Check if numDays and cabinCount are valid before calculating occupation
   const occupation =
-    confirmedStays.reduce((acc, cur) => acc + cur.numNights, 0) /
-    (numDays * cabinCount);
+     numDays > 0 && cabinCount > 0 ?
+    confirmedStays.reduce((acc, cur) => acc + cur.numNights, 0) / (numDays * cabinCount)
+       : 0;
+   console.log(occupation);
 
   return (
     <>
