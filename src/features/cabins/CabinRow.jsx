@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { HiPencil, HiTrash, HiSquare2Stack } from 'react-icons/hi2';
-import Menus from '../../ui/Menus';
+//import Menus from '../../ui/Menus';
 import Modal from '../../ui/Modal';
 import ConfirmDelete from '../../ui/ConfirmDelete';
 import Table from '../../ui/Table';
@@ -63,7 +63,7 @@ function CabinRow({ cabin }) {
   } = cabin;
 
   const { mutate: deleteCabin, isLoading: isDeleting } = useDeleteCabin();
-  const { mutate: createCabin } = useCreateCabin();
+  const { mutate: createCabin, isLoading: isCreating } = useCreateCabin();
 
   function handleDuplicate() {
     createCabin({
@@ -88,49 +88,49 @@ function CabinRow({ cabin }) {
         <span>&mdash;</span>
       )}
 
-      <Modal>
-        <Menus.Menu>
-          <Menus.Toggle id={cabinId} />
+        <div>
+        <button disabled={isCreating} onClick={handleDuplicate}>
+          <HiSquare2Stack />
+        </button>
 
-          <Menus.List id={cabinId}>
-            <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
-              Duplicate
-            </Menus.Button>
-            <Modal.Toggle opens='edit'>
-              <Menus.Button icon={<HiPencil />}>Edit cabin</Menus.Button>
-            </Modal.Toggle>
-            <Modal.Toggle opens='delete'>
-              <Menus.Button icon={<HiTrash />}>Delete cabin</Menus.Button>
-            </Modal.Toggle>
-          </Menus.List>
-        </Menus.Menu>
+        <Modal>
+          <Modal.Open opens="edit">
+            <button>
+              <HiPencil />
+            </button>
+          </Modal.Open>
+          <Modal.Window name="edit">
+            <CreateCabinForm cabinToEdit={cabin} />
+          </Modal.Window>
 
-        <Modal.Window name='edit'>
-          <CreateCabinForm cabinToEdit={cabin} />
-        </Modal.Window>
-
-        <Modal.Window name='delete'>
-          <ConfirmDelete
-            resource='cabin'
-            onConfirm={() => deleteCabin(cabinId)}
-            disabled={isDeleting}
-          />
-        </Modal.Window>
-      </Modal>
-    </Table.Row>
+          <Modal.Open opens="delete">
+            <button>
+              <HiTrash />
+            </button>
+          </Modal.Open>
+          <Modal.Window name="delete">
+            <ConfirmDelete
+              resourceName="cabins"
+              disabled={isDeleting}
+              onConfirm={() => deleteCabin(cabinId)}
+            />
+          </Modal.Window>
+        </Modal>
+        </div>
+        </Table.Row>
   );
 }
 
 // Add PropTypes for validation
 CabinRow.propTypes = {
   cabin: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    maxCapacity: PropTypes.number.isRequired,
-    regularPrice: PropTypes.number.isRequired,
+    maxCapacity: PropTypes.number,
+    regularPrice: PropTypes.number,
     discount: PropTypes.number,
-    image: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    image: PropTypes.string,
+    description: PropTypes.string,
   }).isRequired,
 };
 

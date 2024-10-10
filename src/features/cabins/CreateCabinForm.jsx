@@ -177,8 +177,8 @@ function CreateCabinForm({ cabinToEdit, closeModal }) {
 
 
 CreateCabinForm.propTypes = {
-  cabinToEdit: Proptypes.string.isRequired,
-  closeModal: Proptypes.bool.isRequired
+  cabinToEdit: Proptypes.object,
+  closeModal: Proptypes.bool
 }
 
 export default CreateCabinForm;

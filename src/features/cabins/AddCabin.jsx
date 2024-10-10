@@ -5,10 +5,10 @@ import CreateCabinForm from './CreateCabinForm';
 function AddCabin() {
   return (
     <Modal>
-      <Modal.Toggle opens='new-cabin'>
+      <Modal.Open opens='cabin-form'>
         <Button>Add new cabin</Button>
-      </Modal.Toggle>
-      <Modal.Window name='new-cabin'>
+      </Modal.Open>
+      <Modal.Window name='cabin-form'>
         <CreateCabinForm />
       </Modal.Window>
     </Modal>

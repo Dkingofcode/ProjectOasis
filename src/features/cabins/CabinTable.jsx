@@ -2,7 +2,7 @@
 import CabinRow from './CabinRow';
 import Spinner from '../../ui/Spinner';
 import Table from '../../ui/Table';
-import Menus from '../../ui/Menus';
+//import Menus from '../../ui/Menus';
 //import Empty from '../../ui/Empty';
 //import { useCabins } from 'features/cabins/useCabins';
 //import { useSearchParams } from 'react-router-dom';
@@ -46,7 +46,7 @@ function CabinTable() {
   //const { cabins } = useCabins();
   //const [searchParams] = useSearchParams();
    
-  const {isLoading, data: cabins,  } = useQuery({
+  const {isLoading, data: cabins, } = useQuery({
     queryKey: ["cabin"],
     queryFn: getCabins,
   });
@@ -85,7 +85,7 @@ function CabinTable() {
   );
 
   return (
-    <Menus>
+    <>
       {/* A beautiful API we created here! We could even have defined the widths on the columns in the table header individually, but this keeps it simpler, and I also really like it */}
       <Table columns='9.6rem 0.8fr 2fr 1fr 1fr 3.2rem'>
         <Table.Header>
@@ -107,7 +107,7 @@ function CabinTable() {
           render={(cabin) => <CabinRow key={cabin.id} cabin={cabin} />}
         />
       </Table>
-    </Menus>
+     </>
   );
 }
 
