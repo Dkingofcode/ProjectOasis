@@ -15,7 +15,7 @@ import { guests } from './data-guests';
 // };
 
 async function deleteGuests() {
-  const { error } = await supabase.from('guests').delete().gt('id', 0);
+  const { error } = await supabase.from('guest').delete().gt('id', 0);
   if (error) console.log(error.message);
 }
 
@@ -30,7 +30,7 @@ async function deleteBookings() {
 }
 
 async function createGuests() {
-  const { error } = await supabase.from('guests').insert(guests);
+  const { error } = await supabase.from('guest').insert(guests);
   if (error) console.log(error.message);
 }
 
@@ -42,7 +42,7 @@ async function createCabins() {
 async function createBookings() {
   // Bookings need a guestId and a cabinId. We can't tell Supabase IDs for each object, it will calculate them on its own. So it might be different for different people, especially after multiple uploads. Therefore, we need to first get all guestIds and cabinIds, and then replace the original IDs in the booking data with the actual ones from the DB
   const { data: guestsIds } = await supabase
-    .from('guests')
+    .from('guest ')
     .select('id')
     .order('id');
   const allGuestIds = guestsIds.map((cabin) => cabin.id);
@@ -57,10 +57,10 @@ async function createBookings() {
     const cabin = cabins.at(booking.cabinId - 1);
     const numNights = subtractDates(booking.endDate, booking.startDate);
     const cabinPrice = numNights * (cabin.regularPrice - cabin.discount);
-    const extrasPrice = booking.hasBreakfast
+    const extraPrice = booking.hasBreakfast
       ? numNights * 15 * booking.numGuests
       : 0; // hardcoded breakfast price
-    const totalPrice = cabinPrice + extrasPrice;
+    const totalPrice = cabinPrice + extraPrice;
 
     let status;
     if (
@@ -85,7 +85,7 @@ async function createBookings() {
       ...booking,
       numNights,
       cabinPrice,
-      extrasPrice,
+      extraPrice,
       totalPrice,
       guestId: allGuestIds.at(booking.guestId - 1),
       cabinId: allCabinIds.at(booking.cabinId - 1),

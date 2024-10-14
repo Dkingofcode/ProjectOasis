@@ -110,7 +110,7 @@ function Toggle({ id }) {
 
 // Define PropTypes for Toggle component
 Toggle.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 function List({ id, children }) {
@@ -129,7 +129,7 @@ function List({ id, children }) {
 
 // Define PropTypes for List component
 List.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   children: PropTypes.node.isRequired,
 };
 

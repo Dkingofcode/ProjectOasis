@@ -62,7 +62,7 @@ FormRow.propTypes = {
   label: PropTypes.string, // Label is optional
   error: PropTypes.string, // Error message is optional
   children: PropTypes.element.isRequired, // Children is required and must be a valid React element
-  orientation: PropTypes.oneOf(['vertical', 'horizontal']).isRequired, // Orientation is required and must be either "vertical" or "horizontal"
-};
+  orientation: PropTypes.oneOf(['vertical', 'horizontal']), // Orientation is required and must be either "vertical" or "horizontal"
+};   
 
 export default FormRow;
