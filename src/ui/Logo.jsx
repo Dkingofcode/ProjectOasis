@@ -17,7 +17,7 @@ function Logo() {
   
   return (
     <StyledLogo>
-      <Img style={{ border: "3px solid black", borderRadius: "50%"}} src="treeunsplash.jpg" alt="Logo" />
+      <Img style={{ border: "3px solid white", borderRadius: "200px", width: "100px", height: "90px" }} src="treeunsplash.jpg" alt="Logo" />
 
     </StyledLogo>
   );
