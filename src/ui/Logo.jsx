@@ -17,7 +17,7 @@ function Logo() {
   
   return (
     <StyledLogo>
-      <Img src="vite.svg" alt="Logo" />
+      <Img style={{ border: "3px solid black", borderRadius: "50%"}} src="treeunsplash.jpg" alt="Logo" />
 
     </StyledLogo>
   );

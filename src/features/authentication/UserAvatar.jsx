@@ -28,7 +28,7 @@ function UserAvatar() {
   return (
     <StyledUserAvatar>
       <Avatar
-        src={avatar || "default-user.jpg"}
+        src={avatar || "alexunsplash.jpg"}
         alt={`Avatar of ${fullName}`}
       />
       <span>{fullName}</span>

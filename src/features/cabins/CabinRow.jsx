@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { HiPencil, HiTrash, HiSquare2Stack } from 'react-icons/hi2';
 //import Menus from '../../ui/Menus';
 import Modal from '../../ui/Modal';
+import CabinImgOne from "../../data/cabins/cabin-001.jpg";
 import ConfirmDelete from '../../ui/ConfirmDelete';
 import Table from '../../ui/Table';
 import { formatCurrency } from '../../utils/helpers';
@@ -9,6 +10,7 @@ import { useDeleteCabin } from './useDeleteCabin';
 import { useCreateCabin } from './useCreateCabin';
 import CreateCabinForm from './CreateCabinForm';
 import PropTypes from 'prop-types'; // Import PropTypes for validation
+//import { useState } from 'react';
 
 // Remove the undefined 'v1'
 // If it's supposed to be a version or identifier, define it appropriately.
@@ -52,6 +54,8 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
+//   const [showForm, setShowForm] = useState(false);
+
   const {
     id: cabinId,
     name,
@@ -78,7 +82,7 @@ function CabinRow({ cabin }) {
 
   return (
     <Table.Row role='row'>
-      <Img src={image} alt={`Cabin ${name}`} />
+      <Img src={CabinImgOne} alt={`Cabin ${name}`} />
       <Cabin>{name}</Cabin>
       <div>Fits up to {maxCapacity} guests</div>
       <Price>{formatCurrency(regularPrice)}</Price>

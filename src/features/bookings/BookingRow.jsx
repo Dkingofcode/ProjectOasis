@@ -223,15 +223,14 @@ function BookingRow({
     numNights,
     totalPrice,
     status,
-    guest = {},
-    cabins = {},
+  
   },
 }) {
   const navigate = useNavigate();
   const { checkout, isCheckingOut } = useCheckout();
   const { deleteBooking, isDeleting } = useDeleteBooking();
-  const { fullName: guestName = 'Unknown Guest', email = 'No Email' } = guest;
-  const { name: cabinName = 'Unknown Cabin' } = cabins;
+  // const { fullName: guestName = 'Unknown Guest', email = 'No Email' } = guest;
+  // const { name: cabinName = 'Unknown Cabin' } = cabins;
 
   const statusToTagName = {
     unconfirmed: "blue",
@@ -241,11 +240,11 @@ function BookingRow({
 
   return (
     <Table.Row>
-      <Cabin>{cabinName}</Cabin>
+      <Cabin>cabin number</Cabin>
 
       <Stacked>
-        <span>{guestName}</span>
-        <span>{email}</span>
+        <span>User</span>
+        <span>User@gmail.com</span>
       </Stacked>
 
       <Stacked>

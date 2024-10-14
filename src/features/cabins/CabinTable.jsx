@@ -47,7 +47,7 @@ function CabinTable() {
   //const [searchParams] = useSearchParams();
    
   const {isLoading, data: cabins, } = useQuery({
-    queryKey: ["cabin"],
+    queryKey: ["cabins"],
     queryFn: getCabins,
   });
 
