@@ -3,6 +3,7 @@ import styled from "styled-components";
 import GlobalStyles from "../styles/GlobalStyles";
 import Heading from './Heading'; // Make sure to import Heading component
 import Button from './Button'; // Make sure to import Button component
+//import styled from 'styled-components';
 
 const StyledErrorFallback = styled.main`
   height: 100vh;
